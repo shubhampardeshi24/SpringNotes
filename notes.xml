@@ -1,0 +1,393 @@
+org.apache.maven
+webapp
+name it as SpringMVC
+
+source folders 
+	to get it go to built path order and select on folders
+	
+go to maven repository
+
+Servlet 
+
+<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope>
+</dependency>
+	
+
+
+	
+Web.xml we are going to 
+
+
+Deployment descriptor archtypes reated web application
+		version 2.3 is default
+		during the deployement it gives the exception for that we need to change it to 3.1 or 4
+
+			delete web.xml -> write click on project sho in -> system explored
+			
+			setting 
+			there wil be only one xml file
+			
+			open 
+			change the virsion as 3.1 
+			
+			
+			update the project 
+			
+-----------------
+go to project right click java tools genereate web.xml
+
+-------------------------------------------------------------
+WebXML congiration
+<web-app>
+<Servlet-name> Dispatcher</Servlet-name>		//we can give any name 
+<Servlet-class>DispatcherServlet<Servlet-class>   //DispatcherServlet is class it comes from spring core
+</web-app>			
+			
+
+
+1) Spring core
+5.2.9.Reliea
+
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>5.3.9</version>
+</dependency>
+
+
+2) Sprint context 
+5.2.9 	 
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.9</version>
+</dependency>
+
+
+
+
+
+LomBok
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.12</version>
+    <scope>provided</scope>
+</dependency>
+
+	
+
+Spring AOP
+-----------------------
+SpringWebMvc instead all above dependency we can put dependecy SpringWebMvc then it will add all the dependency which required for the dynamic project 
+
+
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>5.2.9.RELEASE</version>
+</dependency>
+---------------------------------------------------------------------------------------------------------
+
+
+inside web-inf folder 
+create dispatcher.xml name should be same to provide the configuration	
+
+
+
+we will write all java programs in src/main/java
+	create package
+	com.te.springmvc .................. consider this is base package	
+		just create class so that package does not disappear
+		
+	create new sub package
+		1. constroller --------module name is constroller for our understanding 
+		2. create class SpringMVCConstroller class 
+			it will become controller 
+				when we annotate class with @controller
+				@controller		
+				public class SpringMVCcomponent{
+						//inside this class we will write handler methods 
+						
+						
+						@RequestMapping(path="/home")
+						public String xxx(){
+							return home.jsp
+						}
+						
+				}
+				
+				@constroller and @component does the same job we can use any of those 
+------------------------------------------------------------
+create folder inside the WEB-INF/Views
+		inside this create all the jsp pages
+always path as /WEB-INF/VIEWS/jsppage.jsp	
+
+
+
+when you are using @constroller [or] @component to the class to make it eligible for instantiation then it is mandatory to configure dispatcher.xml to configure with 
+<context-compononetScan : base-package="">
+
+request will be given 
+
+
+
+to send the data from controller to jsp 
+
+
+There are three ways 
+	1. Model iterface using mathod there is something knows  model and view class
+		methd addAttribute()
+	2. ModelView	
+		Method addObject()
+	3. ModelMap
+		addAttribute(ModelMap model)
+		
+		
+		
+	
+	****************************frist way*******************************
+	
+	
+	
+	
+	create new sub package
+		1. constroller --------module name is constroller for our understanding 
+		2. create class SpringMVCConstroller class 
+			it will become controller 
+				when we annotate class with @controller
+				@controller		
+				public class SpringMVCcomponent{
+						//inside this class we will write handler methods 
+						
+						
+						@RequestMapping(path="/home")
+						public String xxx(Model model){				//Model is interface in which addAttribute method is present.....We are passing the date in key and value format
+						model.addattribute("name", "Shubham")
+							return "home.jsp";
+						}
+						
+				}
+--------------------------------------------------
+
+in JSP pages
+
+
+<% 
+String string = request.getAttribute ("name") ; //it accepts the key which we have passed in the addAttribute() method so it will return the value "Shubham" which we have passsed there 
+%>	// we got the data now but we are not printing 
+<html>
+<h1> Welcome <%=string%> </h2>			
+<html>			
+===================================================================================================
+
+Secong View 
+	create new sub package
+		1. constroller --------module name is constroller for our understanding 
+		2. create class SpringMVCConstroller class 
+			it will become controller 
+				when we annotate class with @controller
+				@controller		
+				public class SpringMVCcomponent{
+						//inside this class we will write handler methods 
+						
+						
+						@RequestMapping(path="/home")
+						public String xxx(ModelAndView model){			//ModelAndView is the class , it consist of both model name and view name	
+						
+						model.setViewName(home.jsp);				//we need to set the view using this method and return ModelAndView reference only other wise it returns null;
+						model.addObject("name", "Shubham")
+							return model;
+						}
+						
+				}
+--------------------------------------------------------	
+		
+		
+		
+		
+		
+		
+		
+Program 2
+
+Creating Views
+
+
+loginForm.jsp
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------
+4 ways to get the data from a formalpara
+
+
+Httpsservlet request
+	request.getparameter(); 
+
+
+
+=-------------------------------------------------------------------------------
+
+
+**** 1 st way of gettign
+
+
+(dot) represents current project
+
+------------------------------------------------------------------
+
+Secong way of getting the data @Requestparam
+	***************************************second way *************************
+	
+NewLogin.jsp	
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>LoginPage</title>
+</head>
+<body>
+
+	<fieldset>
+		<center>
+		<legend>Employee Login</legend>
+		
+		<form action="./details" method = "post">
+		
+			<table>
+				<tr>
+				<td> <label> enter your name:: </label></td>
+				<td> <input type="text" name="user"> </td>
+				</tr>
+				
+				<tr>
+					<td> <label> enter your password:: </label></td>
+					<td> <input type="password" name="password"> </td>
+				</tr>
+				
+				<tr>
+					<td> <input type="submit" value="Login"> </td>
+				</tr>
+				
+				
+			</table>
+			
+		</form>
+		</center>
+	</fieldset>
+	
+</body>
+</html>
+	
+	
+------------------------------------------------
+	controller
+ 
+//Second way of getting data
+	@GetMapping(path = "/newLogin")
+	public String newLogin() {
+		return "/WEB-INF/view/NewLogin.jsp";
+	}
+
+	@PostMapping("./newDetails")
+	public String getDetails(ModelMap map, @RequestParam String user, @RequestParam String password) {
+		map.addAttribute("user", user);
+		map.addAttribute("password", password);
+		return "/WEB-INF/view/newDetails.jsp";
+	}
+	
+----------------------------------------------------------
+newDetails.jsp
+ <%
+    	String user = (String) request.getAttribute("user");
+    	String password = (String) request.getAttribute("password");
+    
+    %>
+	<meta charset="ISO-8859-1">
+<title>Credentials</title>
+</head>
+<body>
+	<h1>Your User Name is :: <%= user %></h1>
+	<h1>Your Password is:: <%= password %> </h1>
+
+
+</body>
+************************************Third way ***********************************
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+*******************************************
+	
+	create a package bean
+	
+	create bean classname
+	
+		reference variable in the bean class should match the attribute name which is taken inside the jsp form 
+		
+		
+		We can simply pass the reference of the bean class to the the controller method
+		
+		example
+		public String getFormDataFour(ModelMap map, Employee employee)
+		{
+			map.addattribute("user", employee.)
+		}
+	
+	
+	
+
+
+====================================================================
+InternalResourceViewResolver
+
+<Bean class = "qualified name" />
+<property name = "prefix" value="/WEB-INF/view/">
+<property name = "suffix" value=".jsp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
